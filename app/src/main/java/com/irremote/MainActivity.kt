@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private var isPowerOn = false
     private var currentMode = DaikinIR.Mode.COOL
     private var currentTemp = 24
-    private var currentFan = DaikinIR.Fan.AUTO
+    private var currentFan: Int = DaikinIR.Fan.AUTO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         updateUI()
     }
 
-    private fun setFan(fan: Byte) {
+    private fun setFan(fan: Int) {
         currentFan = fan
         sendCommand()
         updateUI()

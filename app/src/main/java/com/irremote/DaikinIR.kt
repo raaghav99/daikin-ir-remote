@@ -20,13 +20,11 @@ object DaikinIR {
     private const val GAP_SPACE  = 29000
 
     // Fixed preamble frames
-    private val FRAME1 = byteArrayOf(
-        0x11, 0xDA.toByte(), 0x27, 0x00,
-        0xC5.toByte(), 0x00, 0x00, 0xD7.toByte()
+    private val FRAME1 = intArrayOf(
+        0x11, 0xDA, 0x27, 0x00, 0xC5, 0x00, 0x00, 0xD7
     )
-    private val FRAME2 = byteArrayOf(
-        0x11, 0xDA.toByte(), 0x27, 0x00,
-        0x42, 0x00, 0x00, 0x54
+    private val FRAME2 = intArrayOf(
+        0x11, 0xDA, 0x27, 0x00, 0x42, 0x00, 0x00, 0x54
     )
 
     object Mode {
@@ -38,8 +36,8 @@ object DaikinIR {
     }
 
     object Fan {
-        const val AUTO   = 0xA0.toByte()
-        const val SILENT = 0xB0.toByte()
+        const val AUTO   = 0xA0
+        const val SILENT = 0xB0
         const val LOW    = 0x30
         const val MED    = 0x40
         const val HIGH   = 0x50
@@ -57,42 +55,30 @@ object DaikinIR {
         power: Boolean,
         mode: Int,
         temp: Int,
-        fan: Byte = Fan.AUTO
+        fan: Int = Fan.AUTO
     ): IntArray {
         val t = temp.coerceIn(16, 30)
 
-        val frame3 = ByteArray(19)
-        frame3[0] = 0x11
-        frame3[1] = 0xDA.toByte()
-        frame3[2] = 0x27
-        frame3[3] = 0x00
-        frame3[4] = 0x00
-        // Byte 5: power bit (0) | mode (bits 4-2)
-        frame3[5] = ((if (power) 1 else 0) or (mode shl 4)).toByte()
-        // Byte 6: temperature ((temp - 10) * 2)
-        frame3[6] = ((t - 10) * 2).toByte()
-        // Byte 7: swing off
-        frame3[7] = 0x30
-        // Byte 8: fan speed
-        frame3[8] = fan
-        frame3[9]  = 0x00
-        frame3[10] = 0x00
-        frame3[11] = 0x00
-        frame3[12] = 0x00
-        frame3[13] = 0x00
-        frame3[14] = 0xC1.toByte()
-        frame3[15] = 0x00
-        frame3[16] = 0x00
-        frame3[17] = 0x00
+        val frame3 = intArrayOf(
+            0x11, 0xDA, 0x27, 0x00, 0x00,
+            (if (power) 1 else 0) or (mode shl 4),  // byte 5: power | mode
+            (t - 10) * 2,                            // byte 6: temperature
+            0x30,                                    // byte 7: swing off
+            fan,                                     // byte 8: fan speed
+            0x00, 0x00, 0x00, 0x00, 0x00,
+            0xC1, 0x00, 0x00, 0x00,
+            0x00  // byte 18: checksum placeholder
+        )
+
         // Checksum = sum of bytes 0-17 mod 256
         var cs = 0
-        for (i in 0..17) cs += frame3[i].toInt() and 0xFF
-        frame3[18] = (cs and 0xFF).toByte()
+        for (i in 0..17) cs += frame3[i] and 0xFF
+        frame3[18] = cs and 0xFF
 
         return encodeFrames(FRAME1, FRAME2, frame3)
     }
 
-    private fun encodeFrames(vararg frames: ByteArray): IntArray {
+    private fun encodeFrames(vararg frames: IntArray): IntArray {
         val pulses = mutableListOf<Int>()
         frames.forEachIndexed { idx, frame ->
             pulses += HDR_MARK
@@ -100,7 +86,7 @@ object DaikinIR {
             for (byte in frame) {
                 for (bit in 0..7) {
                     pulses += BIT_MARK
-                    pulses += if ((byte.toInt() and (1 shl bit)) != 0) ONE_SPACE else ZERO_SPACE
+                    pulses += if ((byte and (1 shl bit)) != 0) ONE_SPACE else ZERO_SPACE
                 }
             }
             pulses += BIT_MARK
