@@ -96,6 +96,17 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Find Brand Button -->
+        <Button
+            android:id="@+id/btnScanBrand"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="FIND MY BRAND (Brute Force)"
+            android:textSize="13sp"
+            android:backgroundTint="#0F3460"
+            android:textColor="#00D4FF"
+            android:layout_marginBottom="12dp" />
+
         <!-- Power Button -->
         <Button
             android:id="@+id/btnPower"

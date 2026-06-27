@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#1A1A2E">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Brand Scanner"
+        android:textColor="#E94560"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Point IR at your AC, press SEND, see if it responds.\nTap NEXT to try the next brand."
+        android:textColor="#AAAAAA"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Counter -->
+    <TextView
+        android:id="@+id/tvCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 / 24"
+        android:textColor="#888888"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Brand name -->
+    <TextView
+        android:id="@+id/tvBrandName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daikin"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Confidence badge -->
+    <TextView
+        android:id="@+id/tvConfidence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EXACT"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="6dp" />
+
+    <!-- Frequency -->
+    <TextView
+        android:id="@+id/tvFreq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="38 kHz"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Send button -->
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:text="SEND POWER SIGNAL"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#E94560"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Prev / Next -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPrev"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="PREV"
+            android:backgroundTint="#16213E"
+            android:textColor="#AAAAAA"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="NEXT BRAND"
+            android:backgroundTint="#0F3460"
+            android:textColor="#00D4FF"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.irremote
 
 import android.content.Context
+import android.content.Intent
 import android.hardware.ConsumerIrManager
 import android.os.Bundle
 import android.widget.Toast
@@ -33,6 +34,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
+        // Scan brands
+        binding.btnScanBrand.setOnClickListener {
+            startActivity(Intent(this, ScanActivity::class.java))
+        }
+
         // Power
         binding.btnPower.setOnClickListener {
             isPowerOn = !isPowerOn
